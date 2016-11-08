@@ -1,12 +1,10 @@
 = WiFi Library for Arduino =
-
 With the Arduino WiFi Shield, this library allows an Arduino board to connect to the internet.
 
 For more information about this library please visit us at
 http://www.arduino.cc/en/Reference/WiFi
 
 == License ==
-
 Copyright (c) 2011-2014 Arduino LLC. All right reserved.
 Copyright (C) 2006-2008, Atmel Corporation All rights reserved.
 Copyright (c) 2001-2004 Swedish Institute of Computer Science.
