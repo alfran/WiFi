@@ -191,24 +191,34 @@ bool ServerDrv::getData(uint8_t sock, uint8_t *data, uint8_t peek)
 
 bool ServerDrv::getDataBuf(uint8_t sock, uint8_t *_data, uint16_t *_dataLen)
 {
+	Serial.println("dentro get data buf");
 	WAIT_FOR_SLAVE_SELECT();
+	Serial.println("dopo wait");
     // Send Command
     commDrv.sendCmd(GET_DATABUF_TCP_CMD, PARAM_NUMS_1);
+		Serial.println("dopo sendcmd");
     commDrv.sendBuffer(&sock, sizeof(sock), LAST_PARAM);
+		Serial.println("dopo sendBuffer");
 
     //Wait the reply elaboration
     commDrv.waitForSlaveReady();
-
+		Serial.println("dopo wait for slave ready");
     // Wait for reply
     if (!commDrv.waitResponseData16(GET_DATABUF_TCP_CMD, _data, _dataLen))
     {
+				Serial.println("prima warn");
         WARN("error waitResponse");
+				Serial.println("dopo warn");
     }
+		Serial.println("prima slave deselect");
     commDrv.commSlaveDeselect();
+		Serial.println("dopo slave deselect");
     if (*_dataLen!=0)
     {
-        return true;
+				Serial.println("DENTRO IF DATALEN");
+				return true;
     }
+		Serial.println("fuori IF DATALEN");
     return false;
 }
 

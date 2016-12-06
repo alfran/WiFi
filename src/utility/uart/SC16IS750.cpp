@@ -63,7 +63,7 @@ int WifiData::read(void)
 size_t WifiData::write(uint8_t val)
 {
     if(!begin_done){      //enable wire
-        begin(57600);
+        begin(9600);
         begin_done = true;
     }
     WriteByte(val);
@@ -126,9 +126,9 @@ int16_t WifiData::SetBaudrate(uint32_t baudrate) //return error of baudrate part
     } else {
         prescaler = 4;
     }
-    Serial.println(prescaler);
+    //Serial.println(prescaler);
     divisor = (SC16IS750_CRYSTCAL_FREQ/prescaler)/(baudrate*16);
-    Serial.println(divisor);
+    //Serial.println(divisor);
     temp_lcr = ReadRegister(SC16IS750_REG_LCR);
     temp_lcr |= 0x80;
     WriteRegister(SC16IS750_REG_LCR,temp_lcr);

@@ -26,6 +26,8 @@ extern "C" {
 #include "utility/debug.h"
 }
 
+int pass_time = 0; // -----------------------------------------------------------------------------------------
+uint16_t lunghezza_parametro; //-----------------------------------------------------------------------------
 
 void UartDrv::begin()
 {
@@ -185,35 +187,98 @@ int UartDrv::waitResponse(uint8_t cmd, uint8_t numParam, uint8_t* param, uint16_
 
 
 //TODO
+// ----- alfran ----- begin ----- old code
+/*
 int UartDrv::waitResponseData16(uint8_t cmd, uint8_t* param, uint16_t* param_len)
 {
+		Serial.println("dentro waitResponseData16");
     char _data = 0;
     uint16_t ii = 0;
 
     UART_IF_CHECK_START_CMD(_data)
     {
-        UART_CHECK_DATA(cmd | REPLY_FLAG, _data){};
-
+				Serial.println("checkpoint a");
+				UART_CHECK_DATA(cmd | REPLY_FLAG, _data){};
+				Serial.println("checkpoint b");
         uint8_t numParam = readChar();
+				Serial.print("numParam: "); Serial.println(numParam);
         if (numParam != 0)
         {
+					Serial.println("checkpoint c");
             readParamLen16(param_len);
-            for (ii=0; ii<(*param_len); ++ii)
+						Serial.print("param len: "); Serial.println(*param_len);
+
+
+
+            //for (ii=0; ii<(*param_len); ++ii)
+						for (ii=0; ii<10; ++ii)
             {
                 // Get Params data
                 param[ii] = readChar();
+								Serial.print("param["); Serial.print(ii); Serial.print("]: "); Serial.println((char)param[ii]);
             }
         }
+				Serial.println("checkpoint d");
         readAndCheckChar(END_CMD, &_data);
+				Serial.println("checkpoint e");
+    }
+
+    return 1;
+}
+// ----- alfran ----- end ----- old code
+*/
+// ----- alfran ----- begin ----- new code
+int UartDrv::waitResponseData16(uint8_t cmd, uint8_t* param, uint16_t* param_len)
+{
+		Serial.println("dentro waitResponseData16");
+    char _data = 0;
+    uint16_t ii = 0;
+
+    UART_IF_CHECK_START_CMD(_data)
+    {
+				//Serial.println("checkpoint a");
+				UART_CHECK_DATA(cmd | REPLY_FLAG, _data){};
+				//Serial.println("checkpoint b");
+        uint8_t numParam = readChar();
+				//Serial.print("numParam: "); Serial.println(numParam);
+        if (numParam != 0)
+        {
+					//Serial.println("checkpoint c");
+            readParamLen16(param_len);
+						//Serial.print("param len: "); Serial.println(*param_len);
+
+
+
+            //for (ii=0; ii<(*param_len); ++ii)
+						for (ii=0; ii<10; ++ii)
+            {
+                // Get Params data
+                param[ii] = readChar();
+								//Serial.print("param["); Serial.print(ii); Serial.print("]: "); Serial.println((char)param[ii]);
+            }
+        }
+				//Serial.println("checkpoint d");
+        readAndCheckChar(END_CMD, &_data);
+				//Serial.println("checkpoint e");
     }
 
     return 1;
 }
 
+
+// ----- alfran ----- end ----- new code
+
+
+
+
+
+
+
 //TODO
 
 int UartDrv::waitResponseData8(uint8_t cmd, uint8_t* param, uint8_t* param_len)
 {
+		Serial.println("dentro waitResponseData8");
     char _data = 0;
 		int ii = 0, idx=0;
 
